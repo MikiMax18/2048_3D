@@ -6,9 +6,9 @@ public class LogicScript : MonoBehaviour
     public static LogicScript Instance { get; private set; }
 
     public int playerScore;
-    public Text scoreText;
-    public GameObject gameOverScreen;
-    public int winCubeValue = 2048;
+    public Text scoreText; 
+    public GameObject gameOverScreen; 
+    public int winCubeValue = 2048; 
 
     public bool IsGameOver { get; private set; } = false;
 
@@ -17,36 +17,41 @@ public class LogicScript : MonoBehaviour
         Instance = this;
     }
 
-    public void AddScore(int scoreToAdd)
-    {
-        playerScore += scoreToAdd;
-        scoreText.text = playerScore.ToString();
-    }
-
     private void OnEnable()
     {
         GameEvents.OnCubeMerged += AddScore;
     }
 
+    public void AddScore(int scoreToAdd)
+    {
+        // Increase score and update UI
+        playerScore += scoreToAdd;
+        scoreText.text = playerScore.ToString();
+    }
+
     [ContextMenu("restartGame")]
     public void RestartGame()
     {
+        // Reset game state and score
         IsGameOver = false;
         playerScore = 0;
         scoreText.text = "0";
         gameOverScreen.SetActive(false);
 
+        // Destroy all cubes in the scene
         foreach (var cube in GameObject.FindGameObjectsWithTag("GameCube"))
         {
             Destroy(cube);
         }
 
+        // Spawn a new cube after restart
         CubeSpawner spawner = FindAnyObjectByType<CubeSpawner>();
         spawner.OnCubeLaunched();
     }
 
     public void ShowGameOver()
     {
+        // Trigger game over screen and stop controls
         IsGameOver = true;
         gameOverScreen.SetActive(true);
     }

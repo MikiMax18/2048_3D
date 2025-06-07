@@ -13,13 +13,13 @@ public class NumberCube : MonoBehaviour
     {
         value = newValue;
 
-        // Оновлюємо текст на всіх гранях
+        // Updating text on all faces
         foreach (var label in labels)
         {
             label.text = value.ToString();
         }
 
-        // Змінюємо матеріал за індексом
+        // Change material by index
         int index = Mathf.RoundToInt(Mathf.Log(value, 2)) - 1;
         if (index >= 0 && index < materialsByValue.Length)
         {
