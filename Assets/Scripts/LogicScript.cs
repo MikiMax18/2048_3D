@@ -6,7 +6,8 @@ public class LogicScript : MonoBehaviour
     public static LogicScript Instance { get; private set; }
 
     public int playerScore;
-    public Text scoreText; 
+    public Text scoreText;
+    public Text resultText;
     public GameObject gameOverScreen; 
     public int winCubeValue = 2048; 
 
@@ -20,6 +21,7 @@ public class LogicScript : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.OnCubeMerged += AddScore;
+        GameEvents.OnGameOver += ShowGameOver;
     }
 
     public void AddScore(int scoreToAdd)
@@ -49,10 +51,11 @@ public class LogicScript : MonoBehaviour
         spawner.OnCubeLaunched();
     }
 
-    public void ShowGameOver()
+    public void ShowGameOver(bool won)
     {
         // Trigger game over screen and stop controls
         IsGameOver = true;
+        resultText.text = won ? "You win" : "You lose";
         gameOverScreen.SetActive(true);
     }
 }

@@ -62,7 +62,7 @@ public class MergeHandler : MonoBehaviour
         // Check win condition
         if (numberCube.value >= LogicScript.Instance.winCubeValue)
         {
-            LogicScript.Instance.ShowGameOver();
+            GameEvents.GameOver(true);
         }
 
         // Fire cube merge event for score system (UI)
